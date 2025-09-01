@@ -27,7 +27,7 @@ st.caption("Päätöksentukityökalu. Varmista paikallinen ohjeistus ja validoin
 
 col1, col2 = st.columns(2)
 with col1:
-    del17p_pct = st.number_input("17p-deleetion osuus (%)", 0.0, 100.0, step=0.1, format="%.1f")
+    del17p_pct = st.number_input("17p-deleetion osuus (%)", 0, 100, step=1, format="%.1f")
     tp53_str = st.radio("TP53-muutos", ["Ei", "Kyllä"], horizontal=True)
     t1416 = st.selectbox("t(14;16)", [1,2], format_func=label_12)
 with col2:
@@ -53,3 +53,4 @@ if st.button("Laske riski", type="primary"):
         for t in triggers:
             st.markdown(f"    - {t}")
     st.markdown(f"- **B2M/krea-yhdistelmä:** {'2 = Kyllä' if b2m_norm_crea == 2 else '1 = Ei'}")
+
