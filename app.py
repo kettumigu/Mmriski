@@ -10,7 +10,7 @@ def arvioi_riski():
 
     if deleetio_17p >= 20:
         print("
-➡️ Riskiluokka: KORKEA (17p deleetio ≥ 20%)")
+➡️ Riskiluokka: KORKEA, mPFS 8.4-23.9 kk, mOS 31.2-45.6 kk, perustuen GEM-tutkimuksiin (17p deleetio ≥ 20%)")
         return
 
     tp53 = input("Onko potilaalla TP53-mutaatio/deleetio? (kyllä/ei): ").strip().lower()
@@ -48,4 +48,5 @@ def arvioi_riski():
 
 if __name__ == "__main__":
     arvioi_riski()
+
 
