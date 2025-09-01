@@ -36,7 +36,7 @@ def arvioi_riski():
     mPFS, mOS = arvioi_mPFS_mOS(deleetio_17p)
     if mPFS is not None:
         korkea_riski = True
-        st.warning("Korkea riski: 17p-deleetio ≥ 20 %, jos samanaikainen TP53-mutaatio jäljellä olevassa alleelissa, ennuste on erityisen huono")
+        st.warning("Korkea riski: 17p-deleetio ≥ 20 %")
         st.write(f"**Arvioitu mPFS:** {mPFS:.1f} kk")
         st.write(f"**Arvioitu mOS:** {mOS:.1f} kk")
 
@@ -92,3 +92,4 @@ def arvioi_riski():
 
 if __name__ == "__main__":
     arvioi_riski()
+
