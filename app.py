@@ -1,56 +1,51 @@
-import streamlit as st
+def arvioi_riski():
+    print("Multippeli myelooman riskiluokitus (portaittain)")
 
-st.set_page_config(page_title="Myelooman riskiluokitin", layout="centered")
+    # Geneettinen riski arvioidaan portaittain
+    try:
+        deleetio_17p = int(input("Kuinka suuressa osassa soluja todetaan 17p deleetio? (0-100): "))
+    except ValueError:
+        print("Virheellinen syöte. Anna numero välillä 0-100.")
+        return
 
-def classify_risk(del17p_pct, tp53_yes, t1416, t414, del1p1q, b2m_norm_crea):
-    triggers = []
-    if del17p_pct is not None and del17p_pct >= 20:
-        triggers.append("17p-deleetio ≥ 20 %")
-    if tp53_yes:
-        triggers.append("TP53-muutos")
-    if t1416 == 2:
-        triggers.append("t(14;16) yhdessä del(1p32)/1q+ kanssa")
-    if t414 == 2:
-        triggers.append("t(4;14) yhdessä del(1p32)/1q+ kanssa")
-    if del1p1q == 2:
-        triggers.append("del(1p32)/1q+")
+    if deleetio_17p >= 20:
+        print("
+➡️ Riskiluokka: KORKEA (17p deleetio ≥ 20%)")
+        return
 
-    genetic_high = len(triggers) > 0
-    overall_high = genetic_high or (b2m_norm_crea == 2)
-    return genetic_high, overall_high, triggers
+    tp53 = input("Onko potilaalla TP53-mutaatio/deleetio? (kyllä/ei): ").strip().lower()
+    if tp53 == "kyllä":
+        print("
+➡️ Riskiluokka: KORKEA (TP53-muutos)")
+        return
 
-def label_12(v):
-    return "2 = Kyllä" if v == 2 else "1 = Ei"
+    t_1416 = input("Onko potilaalla t(14;16)? (1 = Ei tai ainoana muutoksena, 2 = Kyllä del(1p32)/1q+ kanssa): ").strip()
+    if t_1416 == "2":
+        print("
+➡️ Riskiluokka: KORKEA (t(14;16) + del(1p32)/1q+)")
+        return
 
-st.title("Myelooman riskiluokitin")
-st.caption("Päätöksentukityökalu. Varmista paikallinen ohjeistus ja validointi.")
+    t_4414 = input("Onko potilaalla t(4;14)? (1 = Ei tai ainoana muutoksena, 2 = Kyllä del(1p32)/1q+ kanssa): ").strip()
+    if t_4414 == "2":
+        print("
+➡️ Riskiluokka: KORKEA (t(4;14) + del(1p32)/1q+)")
+        return
 
-col1, col2 = st.columns(2)
-with col1:
-    del17p_pct = st.number_input("17p-deleetion osuus (%)", 0, 100, step=1, format="%.1f")
-    tp53_str = st.radio("TP53-muutos", ["Ei", "Kyllä"], horizontal=True)
-    t1416 = st.selectbox("t(14;16)", [1,2], format_func=label_12)
-with col2:
-    t414 = st.selectbox("t(4;14)", [1,2], format_func=label_12)
-    del1p1q = st.selectbox("del(1p32)/1q+", [1,2], format_func=label_12)
-    b2m_norm_crea = st.selectbox("B2M >5,5 mg/dL ja normaali krea", [1,2], format_func=label_12)
+    del_1p32_1q = input("Onko bialleelinen del(1p32) tai del(1p32) ja 1q+? (1 = Ei, 2 = Kyllä): ").strip()
+    if del_1p32_1q == "2":
+        print("
+➡️ Riskiluokka: KORKEA (bialleelinen del(1p32) tai del(1p32) ja 1q+)")
+        return
 
-tp53_yes = (tp53_str == "Kyllä")
-
-if st.button("Laske riski", type="primary"):
-    genetic_high, overall_high, triggers = classify_risk(
-        del17p_pct, tp53_yes, t1416, t414, del1p1q, b2m_norm_crea
-    )
-    if overall_high:
-        st.error("**Kokonaisriski: KORKEA**")
+    # Jos mikään geneettinen ei osoita korkeaa riskiä, kysytään B2M/krea
+    b2m_krea = input("Onko B2M >5,5 mg/dL ja samanaikaisesti normaali krea? (1 = Ei, 2 = Kyllä): ").strip()
+    if b2m_krea == "2":
+        print("
+➡️ Riskiluokka: KORKEA (B2M/krea-yhdistelmä)")
     else:
-        st.success("**Kokonaisriski: STANDARDRISKI**")
-    st.divider()
-    st.subheader("Perustelut")
-    st.markdown(f"- **Geneettinen riski:** {'Korkea' if genetic_high else 'Ei korkea'}")
-    if genetic_high:
-        st.markdown("  - Täyttyneet geneettiset kriteerit:")
-        for t in triggers:
-            st.markdown(f"    - {t}")
-    st.markdown(f"- **B2M/krea-yhdistelmä:** {'2 = Kyllä' if b2m_norm_crea == 2 else '1 = Ei'}")
+        print("
+➡️ Riskiluokka: MATALA")
+
+if __name__ == "__main__":
+    arvioi_riski()
 
