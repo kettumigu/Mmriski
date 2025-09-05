@@ -103,7 +103,7 @@ def arvioi_riski():
             """
     **TP53-muutos**
 
-    Deleetio, mOS n. 75 kk ja mutaatio, mOS n. 54–60 kk)
+    Deleetio, mOS n. 75 kk ja mutaatio, mOS n. 54–60 kk
             """
         )
     else:
@@ -118,4 +118,5 @@ def arvioi_riski():
     
 if __name__ == "__main__":
     arvioi_riski()
+
 
