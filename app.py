@@ -98,13 +98,24 @@ def arvioi_riski():
     st.markdown("---")
     if korkea_riski:
         st.success("➡️ Riskiluokka: **KORKEA**")
+        # Jos haluat TP53-lisätiedot näkyviin lopputulososiossa:
+        st.markdown(
+            """
+    **TP53-muutos**
+
+    Deleetio, mOS n. 75 kk ja mutaatio, mOS n. 54–60 kk)
+            """
+        )
     else:
         st.info("➡️ Riskiluokka: **MATALA**")
-        st.write(
-            "- Jos 1q+ ainoana muutoksena, mOS 96 kk\n"
-            "- Jos monoalleelinen del(1p32), mOS 77 kk\n"
-            "- Jos ei mitään em., ennuste paras, eikä mOS ole 9v seurannassa saavutettu."
-    )
-
+        st.markdown(
+            """
+    - Jos 1q+ ainoana muutoksena, mOS 96 kk  
+    - Jos monoalleelinen del(1p32), mOS 77 kk  
+    - Jos ei mitään em., ennuste paras, eikä mOS ole 9 v seurannassa saavutettu.
+            """
+        )
+    
 if __name__ == "__main__":
     arvioi_riski()
+
